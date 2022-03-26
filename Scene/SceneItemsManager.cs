@@ -1,10 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-<<<<<<< Updated upstream
-=======
-using UnityEngine.SceneManagement;
-
->>>>>>> Stashed changes
 
 [RequireComponent(typeof(GenerateGUID))]
 public class SceneItemsManager : SingletonMonobehaviour<SceneItemsManager>, ISaveable
@@ -88,11 +83,7 @@ public class SceneItemsManager : SingletonMonobehaviour<SceneItemsManager>, ISav
     {
         if (GameObjectSave.sceneData.TryGetValue(sceneName, out SceneSave sceneSave))
         {
-<<<<<<< Updated upstream
             if (sceneSave.listSceneItemDictionary != null && sceneSave.listSceneItemDictionary.TryGetValue("sceneItemList", out List<SceneItem> sceneItemList))
-=======
-            if (sceneSave.listSceneItemDisctionary != null && sceneSave.listSceneItemDisctionary.TryGetValue("sceneItemList", out List<SceneItem> sceneItemList))
->>>>>>> Stashed changes
             {
                 // scene list items found - destroy existing items in scene
                 DestroySceneItems();
@@ -129,17 +120,10 @@ public class SceneItemsManager : SingletonMonobehaviour<SceneItemsManager>, ISav
             sceneItemList.Add(sceneItem);
         }
 
-<<<<<<< Updated upstream
         // Create list scene items dictionary in scene save and add to it
         SceneSave sceneSave = new SceneSave();
         sceneSave.listSceneItemDictionary = new Dictionary<string, List<SceneItem>>();
         sceneSave.listSceneItemDictionary.Add("sceneItemList", sceneItemList);
-=======
-        // Create list scene items in scene save and set to scene item list
-        SceneSave sceneSave = new SceneSave();
-        sceneSave.listSceneItemDisctionary = new Dictionary<string, List<SceneItem>>();
-        sceneSave.listSceneItemDisctionary.Add("sceneItemList", sceneItemList);
->>>>>>> Stashed changes
 
         // Add scene save to gameobject
         GameObjectSave.sceneData.Add(sceneName, sceneSave);

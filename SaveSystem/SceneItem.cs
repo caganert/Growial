@@ -9,8 +9,4 @@ public class SceneItem
     {
         position = new Vector3Serializable();
     }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes

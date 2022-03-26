@@ -1,10 +1,4 @@
 ﻿using System.Collections.Generic;
-<<<<<<< Updated upstream
-=======
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using UnityEngine;
->>>>>>> Stashed changes
 using UnityEngine.SceneManagement;
 
 public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>

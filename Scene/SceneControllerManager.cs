@@ -107,10 +107,7 @@ public class SceneControllerManager : SingletonMonobehaviour<SceneControllerMana
 
         SaveLoadManager.Instance.RestoreCurrentSceneData();
 
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
         // Once the scene is finished loading, start fading in.
         StartCoroutine(Fade(0f));
     }
