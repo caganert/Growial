@@ -126,7 +126,11 @@ public class GridCursor : MonoBehaviour
                     break;
 
                 case ItemType.Watering_tool:
+                case ItemType.Breaking_tool:
+                case ItemType.Chopping_tool:
                 case ItemType.Hoeing_tool:
+                case ItemType.Reaping_tool:
+                case ItemType.Collecting_tool:
                     if (!IsCursorValidForTool(gridPropertyDetails, itemDetails))
                     {
                         SetCursorToInvalid();
@@ -175,7 +179,6 @@ public class GridCursor : MonoBehaviour
     private bool IsCursorValidForCommodity(GridPropertyDetails gridPropertyDetails)
     {
         return gridPropertyDetails.canDropItem;
-
     }
 
     /// <summary>
@@ -184,7 +187,6 @@ public class GridCursor : MonoBehaviour
     private bool IsCursorValidForSeed(GridPropertyDetails gridPropertyDetails)
     {
         return gridPropertyDetails.canDropItem;
-
     }
 
     /// <summary>
@@ -199,6 +201,7 @@ public class GridCursor : MonoBehaviour
                 if (gridPropertyDetails.isDiggable == true && gridPropertyDetails.daysSinceDug == -1)
                 {
                     #region Need to get any items at location so we can check if they are reapable
+
                     // Get world position for cursor
                     Vector3 cursorWorldPosition = new Vector3(GetWorldPositionForCursor().x + 0.5f, GetWorldPositionForCursor().y + 0.5f, 0f);
 
@@ -206,7 +209,8 @@ public class GridCursor : MonoBehaviour
                     List<Item> itemList = new List<Item>();
 
                     HelperMethods.GetComponentsAtBoxLocation<Item>(out itemList, cursorWorldPosition, Settings.cursorSize, 0f);
-                    #endregion
+
+                    #endregion Need to get any items at location so we can check if they are reapable
 
                     // Loop through items found to see if any are reapable type - we are not going to let the player dig where there are reapable scenary items
                     bool foundReapable = false;
@@ -249,7 +253,6 @@ public class GridCursor : MonoBehaviour
         }
     }
 
-
     public void DisableCursor()
     {
         cursorImage.color = Color.clear;
@@ -285,5 +288,4 @@ public class GridCursor : MonoBehaviour
     {
         return grid.CellToWorld(GetGridPositionForCursor());
     }
-
 }

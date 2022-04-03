@@ -61,7 +61,6 @@ public enum PartVariantType
     wateringCan,
     count
 }
-
 public enum GridBoolProperty
 {
     diggable,
@@ -70,6 +69,7 @@ public enum GridBoolProperty
     isPath,
     isNPCObstacle
 }
+
 
 public enum InventoryLocation
 {
@@ -100,6 +100,17 @@ public enum ToolEffect
 {
     none,
     watering
+}
+
+
+public enum HarvestActionEffect
+{
+    deciduousLeavesFalling,
+    pineConesFalling,
+    choppingTreeTrunk,
+    breakingStone,
+    reaping,
+    none
 }
 
 public enum Direction

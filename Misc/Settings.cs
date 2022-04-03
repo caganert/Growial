@@ -12,6 +12,10 @@ public static class Settings
     public const float gridCellSize = 1f; // grid cell size in unity units
     public static Vector2 cursorSize = Vector2.one;
 
+    // Player
+    public static float playerCentreYOffset = 0.875f;
+
+
     // Player Movement
     public const float runningSpeed = 5.333f;
     public const float walkingSpeed = 2.666f;
@@ -60,6 +64,11 @@ public static class Settings
     public const string ReapingTool = "Scythe";
     public const string WateringTool = "Watering Can";
     public const string CollectingTool = "Basket";
+
+    // Reaping
+    public const int maxCollidersToTestPerReapSwing = 15;
+    public const int maxTargetComponentsToDestroyPerReapSwing = 2;
+
 
     // Time System
     public const float secondsPerGameSecond = 0.012f;
