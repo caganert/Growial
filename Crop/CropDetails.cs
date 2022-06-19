@@ -18,6 +18,7 @@ public class CropDetails
     public bool isHarvestActionEffect = false; // flag to determine whether there is a harvest action effect
     public bool spawnCropProducedAtPlayerPosition;
     public HarvestActionEffect harvestActionEffect; // the harvest action effect for the crop
+    public SoundName harvestSound; // the harvest sound for the crop
 
     [ItemCodeDescription]
     public int[] harvestToolItemCode; // array of item codes for the tools that can harvest or 0 array elements if no tool required
