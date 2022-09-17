@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading;
 
 public class Player : SingletonMonobehaviour<Player>, ISaveable
 {
@@ -48,7 +49,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     private Rigidbody2D rigidBody2D;
     private WaitForSeconds useToolAnimationPause;
 
-    private Direction playerDirection;
+    public Direction playerDirection;
 
     private List<CharacterAttribute> characterAttributeCustomisationList;
     private float movementSpeed;
@@ -116,6 +117,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
 
     private void Start()
     {
+        sleepButton.SetActive(false);
         gridCursor = FindObjectOfType<GridCursor>();
         cursor = FindObjectOfType<Cursor>();
         useToolAnimationPause = new WaitForSeconds(Settings.useToolAnimationPause);
@@ -1068,4 +1070,54 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         }
     }
 
+    private int gameHour;
+    public GameObject sleepButton;
+    public GameObject openButton;
+
+    public void Sleep()
+    {
+        StartCoroutine(SleepCoroutine());
+    }
+    private IEnumerator SleepCoroutine()
+    {
+        Debug.Log("Started");
+        gameHour = TimeManager.Instance.GetGameHour();
+
+        if (gameHour > 19)
+        {
+            EventHandler.CallBeforeSceneUnloadFadeOutEvent();
+            yield return StartCoroutine(SceneControllerManager.Instance.Fade(1f));        
+            //EventHandler.CallBeforeSceneUnloadEvent();
+            TimeManager.Instance.SetHourTo6();
+            //EventHandler.CallAfterSceneLoadEvent();
+            yield return StartCoroutine(SceneControllerManager.Instance.Fade(0f));
+            EventHandler.CallAfterSceneLoadFadeInEvent();
+
+        }
+        Debug.Log("Finished");
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Bed")
+        {
+            sleepButton.SetActive(true);
+        }
+        else if (other.gameObject.tag == "Shop")
+        {
+            UIManager.Instance.ShopMenuOn = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Bed")
+        {
+            sleepButton.SetActive(false);
+        }
+        else if (other.gameObject.tag == "Shop")
+        {
+            UIManager.Instance.ShopMenuOn = false;
+        }
+    }
 }

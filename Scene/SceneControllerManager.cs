@@ -13,7 +13,7 @@ public class SceneControllerManager : SingletonMonobehaviour<SceneControllerMana
     public SceneName startingSceneName;
 
 
-    private IEnumerator Fade(float finalAlpha)
+    public IEnumerator Fade(float finalAlpha)
     {
         // Set the fading flag to true so the FadeAndSwitchScenes coroutine won't be called again.
         isFading = true;

@@ -33,7 +33,7 @@ public class NPCSchedule : MonoBehaviour
         EventHandler.AdvanceGameMinuteEvent -= GameTimeSystem_AdvanceMinute;
     }
 
-    private void GameTimeSystem_AdvanceMinute(int gameYear, Season gameSeason, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
+    private void GameTimeSystem_AdvanceMinute(int gameYear, Season gameSeason, int gameMonth, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
     {
         int time = (gameHour * 100) + gameMinute;
 

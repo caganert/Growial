@@ -37,7 +37,9 @@ public static class Settings
 
     // Inventory
     public static int playerInitialInventoryCapacity = 24;
+    public static int chestInitialInventoryCapacity = 48;
     public static int playerMaximumInventoryCapacity = 48;
+    public static int chestMaximumInventoryCapacity = 48;
 
     // NPC Animation Parameters
     public static int walkUp;

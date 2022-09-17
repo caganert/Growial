@@ -20,7 +20,7 @@ public class GameClock : MonoBehaviour
         EventHandler.AdvanceGameMinuteEvent -= UpdateGameTime;
     }
 
-    private void UpdateGameTime(int gameYear, Season gameSeason, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
+    private void UpdateGameTime(int gameYear, Season gameSeason, int gameMonth, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
     {
         // Update time
 

@@ -55,7 +55,7 @@ public class LightingControl : MonoBehaviour
     /// Advance game hour event handler
     /// </summary>
 
-    private void EventHandler_AdvanceGameHourEvent(int gameYear, Season gameSeason, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
+    private void EventHandler_AdvanceGameHourEvent(int gameYear, Season gameSeason, int gameMonth, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
     {
         SetLightingIntensity(gameSeason, gameHour, true);
     }

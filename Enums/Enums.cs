@@ -95,7 +95,6 @@ public enum Season
     count
 }
 
-
 public enum ToolEffect
 {
     none,
@@ -115,7 +114,7 @@ public enum HarvestActionEffect
 
 public enum Weather
 {
-    dry,
+    sunny,
     raining,
     snowing,
     none,

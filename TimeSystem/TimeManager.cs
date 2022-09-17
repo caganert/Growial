@@ -6,12 +6,14 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
 {
 
     private int gameYear = 1;
-    private Season gameSeason = Season.Spring;
-    private int gameDay = 1;
+    private Season gameSeason = Season.Winter;
+    public int gameDay = 1;
     private int gameHour = 6;
     private int gameMinute = 30;
     private int gameSecond = 0;
     private string gameDayOfWeek = "Mon";
+    private int gameMonth = 1;
+    private int[] gameMonthArray;
 
     private bool gameClockPaused = false;
 
@@ -60,7 +62,7 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
 
     private void Start()
     {
-        EventHandler.CallAdvanceGameMinuteEvent(gameYear, gameSeason, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
+        EventHandler.CallAdvanceGameMinuteEvent(gameYear, gameSeason, gameMonth, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
     }
 
     private void Update()
@@ -106,74 +108,108 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
                     if (gameDay > 30)
                     {
                         gameDay = 1;
-
+                        gameMonth++;
+                        if (gameMonth > 12)
+                        {
+                            gameMonth = 1;
+                            gameYear++;
+                            EventHandler.CallAdvanceGameYearEvent(gameYear, gameSeason, gameMonth, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
+                            EventHandler.CallAdvanceGameMonthEvent(gameYear, gameSeason, gameMonth, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
+                            if (gameYear > 9999)
+                            {
+                                gameYear = 1; 
+                            }
+                                
+                        }
+                        int monthOfTheSeason = gameMonth % 3;
                         int gs = (int)gameSeason;
-                        gs++;
-
+                        if (monthOfTheSeason == 0)
+                        {
+                            gs++;
+                        }
                         gameSeason = (Season)gs;
-
                         if (gs > 3)
                         {
                             gs = 0;
                             gameSeason = (Season)gs;
-
-                            gameYear++;
-
-                            if (gameYear > 9999)
-                                gameYear = 1;
-
-
-                            EventHandler.CallAdvanceGameYearEvent(gameYear, gameSeason, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
                         }
 
-                        EventHandler.CallAdvanceGameSeasonEvent(gameYear, gameSeason, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
+                        EventHandler.CallAdvanceGameSeasonEvent(gameYear, gameSeason, gameMonth, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
                     }
 
                     gameDayOfWeek = GetDayOfWeek();
-                    EventHandler.CallAdvanceGameDayEvent(gameYear, gameSeason, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
+                    EventHandler.CallAdvanceGameDayEvent(gameYear, gameSeason, gameMonth, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
                 }
 
-                EventHandler.CallAdvanceGameHourEvent(gameYear, gameSeason, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
+                EventHandler.CallAdvanceGameHourEvent(gameYear, gameSeason, gameMonth, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
             }
 
-            EventHandler.CallAdvanceGameMinuteEvent(gameYear, gameSeason, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
+            EventHandler.CallAdvanceGameMinuteEvent(gameYear, gameSeason, gameMonth, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
 
         }
 
         // Call to advance game second event would go here if required
     }
 
+    public int GetGameHour()
+    {
+        return gameHour;
+    }
+    public int GetGameMinute()
+    {
+        return gameMinute;
+    }
+
+    public int GetGameSecond()
+    {
+        return gameSecond;
+    }
+
+    public int GetGameMonth()
+    {
+        return gameMonth;
+    }
+    private string[] arrDayOfWeek = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+
     private string GetDayOfWeek()
     {
         int totalDays = (((int)gameSeason) * 30) + gameDay;
         int dayOfWeek = totalDays % 7;
-
-        switch (dayOfWeek)
+        if(dayOfWeek>=0 && dayOfWeek < 7)
         {
-            case 1:
-                return "Mon";
-
-            case 2:
-                return "Tue";
-
-            case 3:
-                return "Wed";
-
-            case 4:
-                return "Thu";
-
-            case 5:
-                return "Fri";
-
-            case 6:
-                return "Sat";
-
-            case 0:
-                return "Sun";
-
-            default:
-                return "";
+            return arrDayOfWeek[dayOfWeek];
         }
+        else
+        {
+            return "";
+        }
+
+        //switch (dayOfWeek)
+        //{
+        //    case 1:
+        //        return "Mon";
+
+        //    case 2:
+        //        return "Tue";
+
+        //    case 3:
+        //        return "Wed";
+
+        //    case 4:
+        //        return "Thu";
+
+        //    case 5:
+        //        return "Fri";
+
+        //    case 6:
+        //        return "Sat";
+
+        //    case 0:
+        //        return "Sun";
+
+        //    default:
+        //        return "";
+        //}
     }
 
     public TimeSpan GetGameTime()
@@ -186,6 +222,11 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
     public Season GetGameSeason()
     {
         return gameSeason;
+    }
+
+    public int GetGameDay()
+    {
+        return gameDay;
     }
 
 
@@ -239,6 +280,7 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
 
         // Add values to the int dictionary
         sceneSave.intDictionary.Add("gameYear", gameYear);
+        sceneSave.intDictionary.Add("gameMonth", gameMonth);
         sceneSave.intDictionary.Add("gameDay", gameDay);
         sceneSave.intDictionary.Add("gameHour", gameHour);
         sceneSave.intDictionary.Add("gameMinute", gameMinute);
@@ -271,6 +313,9 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
                     if (sceneSave.intDictionary.TryGetValue("gameYear", out int savedGameYear))
                         gameYear = savedGameYear;
 
+                    if (sceneSave.intDictionary.TryGetValue("gameMonth", out int savedGameMonth))
+                        gameMonth = savedGameMonth;
+
                     if (sceneSave.intDictionary.TryGetValue("gameDay", out int savedGameDay))
                         gameDay = savedGameDay;
 
@@ -299,7 +344,7 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
                     gameTick = 0f;
 
                     // Trigger advance minute event
-                    EventHandler.CallAdvanceGameMinuteEvent(gameYear, gameSeason, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
+                    EventHandler.CallAdvanceGameMinuteEvent(gameYear, gameSeason, gameMonth, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
 
                     // Refresh game clock
                 }
@@ -314,5 +359,12 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
     public void ISaveableRestoreScene(string sceneName)
     {
         // Nothing required here since Time Manager is running on the persistent scene
+    }
+
+    public void SetHourTo6()
+    {
+        gameHour = 6;
+        gameMinute = 0;
+        gameSecond = 0;
     }
 }

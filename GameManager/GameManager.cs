@@ -12,7 +12,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow, 0);
 
         // Set starting weather
-        currentWeather = Weather.dry;
+        currentWeather = Weather.raining;
 
 
     }

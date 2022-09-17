@@ -743,7 +743,7 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
         gridPropertyDictionary[key] = gridPropertyDetails;
     }
 
-    private void AdvanceDay(int gameYear, Season gameSeason, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
+    private void AdvanceDay(int gameYear, Season gameSeason, int gameMonth, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
     {
         // Clear Display All Grid Property Details
         ClearDisplayGridPropertyDetails();
