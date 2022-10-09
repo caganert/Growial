@@ -29,7 +29,7 @@ public static class EventHandler
             RemoveSelectedItemFromInventoryEvent();
     }
 
-
+   
 
     // Harvest Action Effect Event
     public static event Action<Vector3, HarvestActionEffect> HarvestActionEffectEvent;
@@ -100,6 +100,7 @@ public static class EventHandler
 
     // Advance game hour
     public static event Action<int, Season, int, int, string, int, int, int> AdvanceGameHourEvent;
+    public static event Action SetCurrentWeather;
 
     public static void CallAdvanceGameHourEvent(int gameYear, Season gameSeason, int gameMonth, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
     {
@@ -107,16 +108,26 @@ public static class EventHandler
         {
             AdvanceGameHourEvent(gameYear, gameSeason, gameMonth, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
         }
+        if(SetCurrentWeather != null)
+        {
+            SetCurrentWeather();
+        }
     }
 
     // Advance game day
     public static event Action<int, Season, int, int, string, int, int, int> AdvanceGameDayEvent;
+
+    public static event Action SetDailyWeather;
 
     public static void CallAdvanceGameDayEvent(int gameYear, Season gameSeason, int gameMonth, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
     {
         if (AdvanceGameDayEvent != null)
         {
             AdvanceGameDayEvent(gameYear, gameSeason, gameMonth, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
+        }
+        if (SetDailyWeather != null)
+        {
+            SetDailyWeather();
         }
     }
 
